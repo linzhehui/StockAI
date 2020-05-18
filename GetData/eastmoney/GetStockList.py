@@ -9,10 +9,10 @@ import re
 
 def getHTMLText(url, code='UTF-8'):   
     try:        
-         r = requests.get(url)        
-         r.raise_for_status()        
-         r.encoding = code       
-          return r.text   
+        r = requests.get(url)        
+        r.raise_for_status()        
+        r.encoding = code       
+        return r.text   
     except:        
         return "" 
 
@@ -55,12 +55,12 @@ def getStockInformation(detailUrl, outputFile, stockList):
             print("{:5.2f}%".format((count / len(stockList) * 100)), end='')
             continue
         
- def main():    
-     listUrl = 'http://quote.eastmoney.com/stocklist.html'    
-     detailUrl = 'https://gupiao.baidu.com/stock/'    
-     outputFile = 'C:/Users/Administrator/Desktop/out.txt'    
-     stockList = []   
-     getStockList(listUrl, stockList)    
-     getStockInformation(detailUrl, outputFile, stockList)
+def main():
+    listUrl = 'http://quote.eastmoney.com/stocklist.html'    
+    detailUrl = 'https://gupiao.baidu.com/stock/'    
+    outputFile = 'C:/Users/Administrator/Desktop/out.txt'    
+    stockList = []   
+    getStockList(listUrl, stockList)    
+    getStockInformation(detailUrl, outputFile, stockList)
 
 main()
