@@ -1,0 +1,9 @@
+                        <div class="tab"><a href="http://vip.stock.finance.sina.com.cn/quotes_service/view/vMS_tradedetail.php?symbol=sz002444" target="_blank">逐笔</a></div>
+                        <div class="tab" id="tt6_01"><a href="http://vip.stock.finance.sina.com.cn/quotes_service/view/cn_bill.php?symbol=sz002444" target="_blank">大单</a></div>
+                        <div class="tab" id="tt6_02"><a href="http://vip.stock.finance.sina.com.cn/quotes_service/view/cn_price.php?symbol=sz002444" target="_blank">分价</a></div>
+<iframe src="//finance.sina.com.cn/focus/jiaoyi/iframe/limitup.shtml
+https://hq.sinajs.cn/rn=1590056578780&list=sz000001,sz000001_i
+
+
+var hq_str_sz000001="平安银行,13.520,13.510,13.400,13.570,13.360,13.390,13.400,55231200,742797057.290,129900,13.390,180500,13.380,60700,13.370,115096,13.360,263500,13.350,51531,13.400,120154,13.410,71700,13.420,198400,13.430,88800,13.440,2020-05-21,15:00:03,00";
+var hq_str_sz000001_i="A,payh,1.5400,1.5631,0.4000,14.5500,3024.9124,1940591.8198,1940575.268,1940575.268,0,CNY,281.9500,292.9700,40.0000,1,2.7700,379.2600,85.4800,17.600,11.600,0.1,平安银行,X|O|0|0|0,14.86|12.16,20200331|8548000000";
