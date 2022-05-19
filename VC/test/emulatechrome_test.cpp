@@ -1,0 +1,16 @@
+#include <webdriverxx/browsers/chrome.h>
+#include <gtest/gtest.h>
+
+namespace test {
+
+using namespace webdriverxx;
+
+TEST(Chrome, DefaultEmulateDeviceChrome) {
+	chrome::MobileEmulation me;
+	me.SetdeviceName(chrome::device::Get("Galaxy Note 3"));
+	auto gc = Chrome();
+	gc.GetChromeOptions().SetMobileEmulation(me);
+	ASSERT_EQ(gc.GetChromeOptions().GetMobileEmulation().GetdeviceName(), me.GetdeviceName());
+}
+
+} // namespace test
