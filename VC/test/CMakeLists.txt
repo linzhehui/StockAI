@@ -41,29 +41,7 @@ set(HEADER_FILES
 	)
 
 set(SOURCE_FILES
-	alerts_test.cpp
 	browsers_test.cpp
-	capabilities_test.cpp
-	conversions_test.cpp
-	client_test.cpp
-	element_test.cpp
-	environment.h
-	examples_test.cpp
-	finder_test.cpp
-	frames_test.cpp
-	http_connection_test.cpp
-	js_test.cpp
-	keyboard_test.cpp
-	main.cpp
-	mouse_test.cpp
-	resource_test.cpp
-	session_test.cpp
-	shared_test.cpp
-	to_string_test.cpp
-	wait_match_test.cpp
-	wait_test.cpp
-	webdriver_test.cpp
-	emulatechrome_test.cpp
 	)
 
 file(COPY pages DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -72,7 +50,8 @@ add_definitions(-DWEBDRIVERXX_ENABLE_GMOCK_MATCHERS)
 
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
+	#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 elseif (
 	"${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
 	"${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
@@ -110,7 +89,7 @@ if (WIN32)
 	externalproject_add(curl_project
 		URL https://pub.allbsd.org/MidnightBSD/distfiles/curl-7.75.0.tar.xz
 		PREFIX curl
-		CMAKE_ARGS -DCURL_STATICLIB=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_CURL_EXE=OFF -DBUILD_CURL_TESTS=OFF -DCMAKE_USE_OPENSSL=OFF -DCURL_ZLIB=OFF -DHTTP_ONLY=ON
+		CMAKE_ARGS -DCURL_STATIC_CRT=ON -DCURL_STATICLIB=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_CURL_EXE=OFF -DBUILD_TESTING=OFF -DCMAKE_USE_OPENSSL=OFF -DCURL_ZLIB=OFF -DHTTP_ONLY=ON
 		INSTALL_COMMAND ""
 		UPDATE_COMMAND ""
 	)
@@ -118,8 +97,9 @@ if (WIN32)
 	include_directories("${source_dir}/include")
 	link_directories("${binary_dir}/lib")
 	list(APPEND LIBS libcurl wsock32 ws2_32)
-	list(APPEND DEPS curl_project)
+	#list(APPEND DEPS curl_project)
 	add_definitions(-DCURL_STATICLIB)
+	#add_definitions(-DBUILDING_LIBCURL)
 else()
 	find_package(CURL REQUIRED)
 	include_directories(${CURL_INCLUDE_DIR})
@@ -138,7 +118,7 @@ externalproject_get_property(googletest source_dir binary_dir)
 include_directories("${source_dir}/googletest/include")
 include_directories("${source_dir}/googlemock/include")
 link_directories("${binary_dir}/lib")
-list(APPEND DEPS googletest)
+#list(APPEND DEPS googletest)
 list(APPEND LIBS gtest gmock)
 
 # pthread
@@ -149,11 +129,11 @@ if (UNIX)
 endif()
 
 add_library(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
-add_dependencies(${PROJECT_NAME} ${DEPS})
+#add_dependencies(${PROJECT_NAME} ${DEPS})
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 
 add_executable(${PROJECT_NAME}_test ${SOURCE_FILES} ${HEADER_FILES})
-add_dependencies(${PROJECT_NAME}_test ${DEPS})
+#add_dependencies(${PROJECT_NAME}_test ${DEPS})
 target_link_libraries(${PROJECT_NAME}_test ${LIBS})
 add_test(${PROJECT_NAME}_test ${PROJECT_NAME})
 
@@ -169,4 +149,4 @@ if (WIN32)
 	set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME} SUFFIX ".dll")
 endif()
 
-install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+#install(TARGETS ${PROJECT_NAME} DESTINATION lib)
