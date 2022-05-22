@@ -51,10 +51,7 @@ void Resize(char* str, size_t curSize, size_t newSize){
     curSize = newSize;
 }
 #endif
-void EncodeChunk(const uint8_t* in, uint64_t inLen, char* out)
-{
-    EncodeChunk(in,(uint64_t)inLen, out);
-}
+
 void EncodeChunk(const uint8_t *in, uint32_t inLen, char *out)
 {
     /*
@@ -98,9 +95,9 @@ void EncodeChunk(const uint8_t *in, uint32_t inLen, char *out)
       }
     }
 }
-uint32_t DecodeChunk(const char* in, uint64_t inLen, uint8_t* out)
+void EncodeChunk(const uint8_t* in, uint64_t inLen, char* out)
 {
-    return DecodeChunk(in,(uint32_t)inLen,out);
+	EncodeChunk(in, (uint32_t)(inLen), out);
 }
 uint32_t DecodeChunk(const char *in, uint32_t inLen,uint8_t *out)
 {
@@ -170,6 +167,10 @@ uint32_t DecodeChunk(const char *in, uint32_t inLen,uint8_t *out)
     }
     out[oIndex] = 0;
     return oIndex;
+}
+uint32_t DecodeChunk(const char* in, uint64_t inLen, uint8_t* out)
+{
+	return DecodeChunk(in, (uint32_t)inLen, out);
 }
 uint32_t GetEncodeLen(uint64_t inLen)
 {

@@ -5,7 +5,8 @@
 #include <webdriverxx/webdriver.h>
 #include <gtest/gtest.h>
 #include <string>
-
+#include <process.h>
+#include <string.h>
 
 namespace test {
 
@@ -47,11 +48,27 @@ Parameters ParseParameters(int argc, char** argv) {
 
 #include <webdriverxx/browsers/ie.h>
 int main(int argc, char** argv) {
-
+	bool x = true;
 	::testing::InitGoogleTest(&argc, argv);
 	::testing::AddGlobalTestEnvironment(
 		new test::Environment(test::ParseParameters(argc, argv))
 	);
+	x = false;
+	if (x)
+	{
+		//_beginthread(0, 0, 0);
+		//fgets(0,0,0);
+		//_time64(0);
+		//vsscanf(nullptr,nullptr,0);
+		//strncpy(nullptr, nullptr, 0);
+		//_unlink(nullptr);
+		//feof(nullptr);
+		//strpbrk((const char*)nullptr,nullptr);
+		//_access(nullptr, 0);
+		//strspn(nullptr,nullptr);
+	}
+	//
+
 	return RUN_ALL_TESTS();
 }
 namespace test {
