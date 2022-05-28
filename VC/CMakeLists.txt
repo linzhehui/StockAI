@@ -11,19 +11,18 @@ if(NOT MSVC OR NOT MSYS OR NOT MINGW)
     elseif(COMPILER_SUPPORTS_CXX0X)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 	else()
-	    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-		set(CMAKE_CXX_STANDARD 17) 
-		set(CMAKE_CXX_STANDARD_REQUIRED ON) 
-		set(CMAKE_CXX_EXTENSIONS OFF) 
     endif()
 else()
     message(<TRACE> "message to display" )
 endif()
 
-set(CMAKE_CXX_STANDARD 17) 
-set(CMAKE_CXX_STANDARD_REQUIRED ON) 
-set(CMAKE_CXX_EXTENSIONS OFF) 
-set(CompilerFlags
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	message(<TRACE> "MATCHES MSVC" )
+	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+	set(CMAKE_CXX_STANDARD 17) 
+	set(CMAKE_CXX_STANDARD_REQUIRED ON) 
+	set(CMAKE_CXX_EXTENSIONS OFF) 
+	set(CompilerFlags
         CMAKE_CXX_FLAGS
         CMAKE_CXX_FLAGS_DEBUG
         CMAKE_CXX_FLAGS_RELEASE
@@ -31,9 +30,16 @@ set(CompilerFlags
         CMAKE_C_FLAGS_DEBUG
         CMAKE_C_FLAGS_RELEASE
         )
-foreach(CompilerFlag ${CompilerFlags})
-  string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
-endforeach()
+	foreach(CompilerFlag ${CompilerFlags})
+	string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+	endforeach()
+else()
+	message(<TRACE> "NOT MATCHES MSVC" )
+endif()
+
+
+
+
 
 #enable_testing()
 
