@@ -56,16 +56,7 @@ int main(int argc, char** argv) {
 	x = false;
 	if (x)
 	{
-		//_beginthread(0, 0, 0);
-		//fgets(0,0,0);
-		//_time64(0);
-		//vsscanf(nullptr,nullptr,0);
-		//strncpy(nullptr, nullptr, 0);
-		//_unlink(nullptr);
-		//feof(nullptr);
-		//strpbrk((const char*)nullptr,nullptr);
-		//_access(nullptr, 0);
-		//strspn(nullptr,nullptr);
+
 	}
 	//
 
@@ -97,16 +88,21 @@ TEST(Firefox, HasCapabilitiesProperties) {
 TEST(Firefox, ConvertsToJson) {
 	//foptions.SetLoggingPrefs(LoggingPrefs().SetDriverLogLevel(log_level::Warn));
 	auto ff = Firefox();
-	ff.GetFirefoxOptions().SetLoggingPrefs(LoggingPrefs().SetDriverLogLevel(log_level::Warn));
+	ff.SetFirefoxOptions(FirefoxOptions()
+		.SetLoggingPrefs(LoggingPrefs().SetDriverLogLevel(log_level::Warn))
+		.SetBinary("abc"));
+
+	//ff.GetFirefoxOptions().SetLoggingPrefs(LoggingPrefs().SetDriverLogLevel(log_level::Warn));
 	//foptions.SetLoggingPrefs(LoggingPrefs().SetDriverLogLevel(log_level::Warn));
 
 	const auto json = ToJson(ff);
 	const auto c = FromJson<Capabilities>(json);
-	const auto logging = c.Get<JsonObject>("loggingPrefs");
+	const auto firefoxopt = c.Get<JsonObject>("moz:firefoxOptions");
+	const auto logging = firefoxopt.Get<JsonObject>("loggingPrefs");
 
 	ASSERT_EQ(browser::Firefox, c.GetBrowserName());
-	ASSERT_EQ("WARNING", logging.Get<std::string>("driver"));
-	ASSERT_EQ("abc", c.Get<std::string>("firefox_binary"));
+	ASSERT_EQ("warn", logging.Get<std::string>("driver"));
+	ASSERT_EQ("abc", firefoxopt.Get<std::string>("binary"));
 }
 
 TEST(InternetExplorer, ConvertsToJson) {
