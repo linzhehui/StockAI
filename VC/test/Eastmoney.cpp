@@ -12,6 +12,7 @@
 #include <thread>
 #include <pystring/pystring.h>
 #include <gtest/gtest.h>
+#include "conio.h"
 
 namespace test {
 
@@ -54,7 +55,7 @@ namespace test {
 using namespace webdriverxx;
 WebDriver initWebDriver() {
 	auto caps = Capabilities();
-	caps.SetVersion("93.0.4577.63");
+	caps.SetVersion("101.0.4951.67");
 	caps.SetBrowserName(browser::Chrome);
 	caps.SetPlatform(platform::Any);
 	WebDriver driver = Start(Chrome(caps));
@@ -68,7 +69,7 @@ GTEST_TEST(WdTests, TestBaidu) {
 	kw.SendKeys("Hello");
 	auto su = driver.FindElement(ById("su"));
 	su.Click();
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::this_thread::sleep_for(std::chrono::seconds(1000));
 	auto source = driver.GetPageSource();
 	auto source_lower = pystring::lower(source);
 	ASSERT_TRUE(source_lower.find("hello") != std::string::npos);
@@ -80,11 +81,20 @@ int main(int argc, char** argv) {
 	::testing::AddGlobalTestEnvironment(
 		new test::Environment(test::ParseParameters(argc, argv))
 	);
-	x = false;
-	if (x)
-	{
-
-	}
-	//
+	
 	return RUN_ALL_TESTS();
+	//auto driver = initWebDriver();
+	//driver.Navigate("https://www.baidu.com");
+	//auto kw = driver.FindElement(ById("kw"));
+	//kw.SendKeys("Hello");
+	//auto su = driver.FindElement(ById("su"));
+	//su.Click();
+	//std::this_thread::sleep_for(std::chrono::seconds(1000));
+	//auto source = driver.GetPageSource();
+	//auto source_lower = pystring::lower(source);
+	//if (source_lower.find("hello") != std::string::npos)
+	//{
+
+	//}
+	//getch();
 }
